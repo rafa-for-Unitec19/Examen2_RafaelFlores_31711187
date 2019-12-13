@@ -13,6 +13,9 @@ import java.util.ArrayList;
  * @author Faith
  */
 public class Usuarios implements Serializable{
+    
+    private static final Long SeriaVersionUID = 775L;
+    
     String nombre, correo, usuario, contraseña;
     int edad;
     Canales canal;

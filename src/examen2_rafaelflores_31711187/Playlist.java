@@ -13,6 +13,8 @@ import java.util.ArrayList;
  * @author Faith
  */
 public class Playlist implements Serializable{
+    private static final Long SeriaVersionUID = 778L;
+    
     ArrayList<Videos> videos;
     int duracionTot;
 

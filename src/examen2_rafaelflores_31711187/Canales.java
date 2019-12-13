@@ -13,12 +13,16 @@ import java.util.ArrayList;
  * @author Faith
  */
 public class Canales implements Serializable{
+    private static final Long SeriaVersionUID = 776L;
+    
     int numeroSuscriptores, numVideos, cantLikes;
     String nombre, Categoria;
     ArrayList<Videos> vidPropios;
 
-    public Canales() {
+    public Canales(String nombre, String categoria) {
         this.vidPropios = new ArrayList();
+        this.nombre = nombre;
+        this.Categoria = categoria;
     }
     
     
