@@ -5,15 +5,22 @@
  */
 package examen2_rafaelflores_31711187;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Faith
  */
-public class Playlist {
+public class Playlist implements Serializable{
     ArrayList<Videos> videos;
     int duracionTot;
+
+    public Playlist() {
+        this.videos = new ArrayList();
+    }
+    
+    
 
     public Playlist(int duracionTot) {
         this.videos = new ArrayList();

@@ -5,13 +5,14 @@
  */
 package examen2_rafaelflores_31711187;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Faith
  */
-public class Videos {
+public class Videos implements Serializable{
     String nombre;
     int duracion, numLikes, numDislikes;
     ArrayList<String> comentarios, subtitulos;

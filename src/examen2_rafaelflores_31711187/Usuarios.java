@@ -5,13 +5,14 @@
  */
 package examen2_rafaelflores_31711187;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Faith
  */
-public class Usuarios {
+public class Usuarios implements Serializable{
     String nombre, correo, usuario, contraseña;
     int edad;
     Canales canal;

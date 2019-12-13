@@ -5,16 +5,23 @@
  */
 package examen2_rafaelflores_31711187;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Faith
  */
-public class Canales {
+public class Canales implements Serializable{
     int numeroSuscriptores, numVideos, cantLikes;
     String nombre, Categoria;
     ArrayList<Videos> vidPropios;
+
+    public Canales() {
+        this.vidPropios = new ArrayList();
+    }
+    
+    
 
     public Canales(int numeroSuscriptores, int numVideos, int cantLikes, String nombre, String Categoria) {
         this.numeroSuscriptores = numeroSuscriptores;
