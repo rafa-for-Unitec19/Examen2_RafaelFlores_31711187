@@ -76,6 +76,8 @@ public class main extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtxASubtitulos = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
+        popReproducir = new javax.swing.JPopupMenu();
+        itmReproducir = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -101,7 +103,7 @@ public class main extends javax.swing.JFrame {
         lblTituloVideo = new javax.swing.JLabel();
         btnLike = new javax.swing.JButton();
         btnDislike = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        pgrProgreso = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAComentarios = new javax.swing.JTextArea();
         lblSubtitulos = new javax.swing.JLabel();
@@ -110,6 +112,7 @@ public class main extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         btnFavoritos = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        lblDuracion = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -347,6 +350,14 @@ public class main extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
+        itmReproducir.setText("Reproducir");
+        itmReproducir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmReproducirActionPerformed(evt);
+            }
+        });
+        popReproducir.add(itmReproducir);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lstAllChanels.setModel(new DefaultListModel());
@@ -362,6 +373,11 @@ public class main extends javax.swing.JFrame {
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Otros");
         treeNode1.add(treeNode2);
         jtSuscripciones.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jtSuscripciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtSuscripcionesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtSuscripciones);
 
         jLabel10.setText("Todos los Canales");
@@ -509,8 +525,6 @@ public class main extends javax.swing.JFrame {
 
         lblBienvenida.setText("Bienvenido:");
 
-        lblTituloVideo.setText("jLabel3");
-
         btnLike.setText("Like");
         btnLike.setEnabled(false);
 
@@ -570,8 +584,11 @@ public class main extends javax.swing.JFrame {
                         .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblTituloVideo)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTituloVideo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDuracion))
+                            .addComponent(pgrProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                             .addComponent(lblSubtitulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnLike)
@@ -610,11 +627,12 @@ public class main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTituloVideo)
-                    .addComponent(jLabel9))
+                    .addComponent(jLabel9)
+                    .addComponent(lblDuracion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pgrProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblSubtitulos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -754,6 +772,26 @@ public class main extends javax.swing.JFrame {
         this.jdAgrVideo.setLocationRelativeTo(this);
         this.jdAgrVideo.setVisible(true);
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jtSuscripcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtSuscripcionesMouseClicked
+        if (evt.isMetaDown()) {
+            //seleccionar un nodo con click derecho.
+            int row = jtSuscripciones.getClosestRowForLocation(evt.getX(), evt.getY());
+
+            jtSuscripciones.setSelectionRow(row);
+            Object v1 = jtSuscripciones.getSelectionPath().getLastPathComponent();
+            DefaultMutableTreeNode nodo_seleccionado = (DefaultMutableTreeNode) v1;
+            if (nodo_seleccionado.getUserObject() instanceof Videos) {
+                actualVideo = (Videos) nodo_seleccionado.getUserObject();
+                this.popReproducir.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_jtSuscripcionesMouseClicked
+
+    private void itmReproducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmReproducirActionPerformed
+        Reproduccion hilo = new Reproduccion(this.lblTituloVideo, this.lblSubtitulos, this.lblDuracion, this.pgrProgreso, this.actualVideo);
+        hilo.start();
+    }//GEN-LAST:event_itmReproducirActionPerformed
 
     public void cargarUsers(){
         this.archivo.cargarArchivo();
@@ -897,6 +935,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSuscribirse;
     private javax.swing.JComboBox<String> cmbCategoria;
+    private javax.swing.JMenuItem itmReproducir;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -925,7 +964,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -940,11 +978,14 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JDialog jdLogIn;
     private javax.swing.JTree jtSuscripciones;
     private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblDuracion;
     private javax.swing.JLabel lblSubtitulos;
     private javax.swing.JLabel lblTituloVideo;
     private javax.swing.JList<String> lstAllChanels;
     private javax.swing.JList<String> lstMisVideos;
     private javax.swing.JList<String> lstPlaylist;
+    private javax.swing.JProgressBar pgrProgreso;
+    private javax.swing.JPopupMenu popReproducir;
     private javax.swing.JSpinner spnDuracion;
     private javax.swing.JSpinner spnEdad;
     private javax.swing.JTextArea txtAComentarios;
@@ -961,4 +1002,5 @@ public class main extends javax.swing.JFrame {
     private Usuarios actual;
     private guardarUsuarios archivo  = new guardarUsuarios("./Users.raffles");;
     private final String[] Categorias = {"VideoJuegos", "Musica", "Cocina", "Otros"};
+    private Videos actualVideo;
 }
