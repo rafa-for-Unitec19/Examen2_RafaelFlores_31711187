@@ -48,7 +48,6 @@ public class Reproduccion extends Thread{
                 diferencia = diferencia / 1000;
                 this.progreso.setValue((int) diferencia);
                 this.telemetria.setText(diferencia+" Seg.");
-                
                 if (diferencia >= duracion) {
                     avanza = false;
                 }
