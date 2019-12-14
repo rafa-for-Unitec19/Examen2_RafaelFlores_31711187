@@ -16,11 +16,11 @@ public class Usuarios implements Serializable{
     
     private static final Long SeriaVersionUID = 775L;
     
-    String nombre, correo, usuario, contraseña;
-    int edad;
-    Canales canal;
-    ArrayList<Canales> suscripciones;
-    Playlist favoritos;
+    private String nombre, correo, usuario, contraseña;
+    private int edad;
+    private Canales canal;
+    private ArrayList<Canales> suscripciones;
+    private Playlist favoritos;
 
     public Usuarios(String nombre, String correo, String usuario, String contraseña, int edad, Canales canal, Playlist favoritos) {
         this.nombre = nombre;
@@ -57,8 +57,8 @@ public class Usuarios implements Serializable{
         this.canal = canal;
     }
 
-    public void setSuscripciones(ArrayList<Canales> suscripciones) {
-        this.suscripciones = suscripciones;
+    public void setSuscripciones(Canales suscripciones) {
+        this.suscripciones.add(suscripciones);
     }
 
     public void setFavoritos(Playlist favoritos) {

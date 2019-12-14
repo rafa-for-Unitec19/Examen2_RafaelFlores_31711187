@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class Canales implements Serializable{
     private static final Long SeriaVersionUID = 776L;
     
-    int numeroSuscriptores, numVideos, cantLikes;
-    String nombre, Categoria;
-    ArrayList<Videos> vidPropios;
+    private int numeroSuscriptores, numVideos, cantLikes;
+    private String nombre, Categoria;
+    private ArrayList<Videos> vidPropios;
 
     public Canales(String nombre, String categoria) {
         this.vidPropios = new ArrayList();
@@ -56,8 +56,8 @@ public class Canales implements Serializable{
         this.Categoria = Categoria;
     }
 
-    public void setVidPropios(ArrayList<Videos> vidPropios) {
-        this.vidPropios = vidPropios;
+    public void setVidPropios(Videos vidPropios) {
+        this.vidPropios.add(vidPropios);
     }
 
     public int getNumeroSuscriptores() {

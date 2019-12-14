@@ -15,11 +15,11 @@ import java.util.ArrayList;
 public class Videos implements Serializable{
     private static final Long SeriaVersionUID = 777L;
     
-    String nombre;
-    int duracion, numLikes, numDislikes;
-    ArrayList<String> comentarios, subtitulos;
+    private String nombre;
+    private int duracion, numLikes, numDislikes;
+    private ArrayList<String> comentarios, subtitulos;
 
-    public Videos(String nombre, int duracion, int numLikes, int numDislikes) {
+    public Videos(String nombre, int duracion) {
         this.nombre = nombre;
         this.duracion = duracion;
         this.numLikes = numLikes;
@@ -44,12 +44,12 @@ public class Videos implements Serializable{
         this.numDislikes = numDislikes;
     }
 
-    public void setComentarios(ArrayList<String> comentarios) {
-        this.comentarios = comentarios;
+    public void setComentarios(String comentarios) {
+        this.comentarios.add(comentarios);
     }
 
-    public void setSubtitulos(ArrayList<String> subtitulos) {
-        this.subtitulos = subtitulos;
+    public void setSubtitulos(String subtitulos) {
+        this.subtitulos.add(subtitulos);
     }
 
     public String getNombre() {
@@ -78,7 +78,7 @@ public class Videos implements Serializable{
 
     @Override
     public String toString() {
-        return nombre;
+        return "Titulo: "+nombre + " - Duracion: " + duracion;
     }
     
     
