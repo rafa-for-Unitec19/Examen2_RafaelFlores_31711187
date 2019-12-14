@@ -74,8 +74,11 @@ public class main extends javax.swing.JFrame {
         spnDuracion = new javax.swing.JSpinner();
         btnCrear = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        txtxASubtitulos = new javax.swing.JTextArea();
+        txtASubtitulos = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        lstSubtitulos = new javax.swing.JList<>();
+        btnAgrSub = new javax.swing.JButton();
         popReproducir = new javax.swing.JPopupMenu();
         itmReproducir = new javax.swing.JMenuItem();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -283,18 +286,28 @@ public class main extends javax.swing.JFrame {
 
         spnDuracion.setModel(new javax.swing.SpinnerNumberModel(10, 10, null, 5));
 
-        btnCrear.setText("Crear");
+        btnCrear.setText("Crear Video");
         btnCrear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCrearMouseClicked(evt);
             }
         });
 
-        txtxASubtitulos.setColumns(20);
-        txtxASubtitulos.setRows(5);
-        jScrollPane7.setViewportView(txtxASubtitulos);
+        txtASubtitulos.setColumns(20);
+        txtASubtitulos.setRows(5);
+        jScrollPane7.setViewportView(txtASubtitulos);
 
         jLabel18.setText("Subtitulos");
+
+        lstSubtitulos.setModel(new DefaultListModel());
+        jScrollPane8.setViewportView(lstSubtitulos);
+
+        btnAgrSub.setText("Agregar Sub.");
+        btnAgrSub.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgrSubMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jdAgrVideoLayout = new javax.swing.GroupLayout(jdAgrVideo.getContentPane());
         jdAgrVideo.getContentPane().setLayout(jdAgrVideoLayout);
@@ -303,7 +316,10 @@ public class main extends javax.swing.JFrame {
             .addGroup(jdAgrVideoLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
+                    .addGroup(jdAgrVideoLayout.createSequentialGroup()
+                        .addComponent(btnAgrSub)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCrear))
                     .addGroup(jdAgrVideoLayout.createSequentialGroup()
                         .addGroup(jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jdAgrVideoLayout.createSequentialGroup()
@@ -318,13 +334,15 @@ public class main extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addGroup(jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNombreVid)
-                                    .addComponent(spnDuracion)
-                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))))))
+                                    .addComponent(spnDuracion)))))
+                    .addGroup(jdAgrVideoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                    .addGroup(jdAgrVideoLayout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jdAgrVideoLayout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(btnCrear)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jdAgrVideoLayout.setVerticalGroup(
             jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,14 +358,16 @@ public class main extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(spnDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
                 .addGroup(jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addGroup(jdAgrVideoLayout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCrear)
-                .addGap(12, 12, 12))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jdAgrVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrear)
+                    .addComponent(btnAgrSub))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         itmReproducir.setText("Reproducir");
@@ -757,12 +777,21 @@ public class main extends javax.swing.JFrame {
         if (this.txtNombreVid.getText().equals("")) {
             JOptionPane.showMessageDialog(this.jdAgrVideo, "Debe llenar todos los campos");
         }else{
+            DefaultListModel modeloListaSub = (DefaultListModel) this.lstSubtitulos.getModel();
             DefaultListModel modeloLista = (DefaultListModel) this.lstMisVideos.getModel();
-            Videos v = new Videos(this.txtNombreVid.getText(), Integer.parseInt(this.spnDuracion.getValue().toString()));
-            actual.getCanal().setVidPropios(v);
-            modeloLista.addElement(v);
-            JOptionPane.showMessageDialog(this.jdAgrVideo, "Video añadido con exito");
-            this.jdAgrVideo.setVisible(false);
+            int cantSub = Integer.parseInt(this.spnDuracion.getValue().toString())/10;
+            if (modeloListaSub.getSize() < cantSub) {
+                JOptionPane.showMessageDialog(this.jdAgrVideo, "Debe generar los Subtitulos necesarios");
+            }else{
+                Videos v = new Videos(this.txtNombreVid.getText(), Integer.parseInt(this.spnDuracion.getValue().toString()));
+                for (int i = 0; i < modeloListaSub.getSize(); i++) {
+                    v.setSubtitulos(modeloListaSub.get(i).toString());
+                }
+                actual.getCanal().setVidPropios(v);
+                modeloLista.addElement(v);
+                JOptionPane.showMessageDialog(this.jdAgrVideo, "Video añadido con exito");
+                this.jdAgrVideo.setVisible(false);
+            }
         }
     }//GEN-LAST:event_btnCrearMouseClicked
 
@@ -792,6 +821,21 @@ public class main extends javax.swing.JFrame {
         Reproduccion hilo = new Reproduccion(this.lblTituloVideo, this.lblSubtitulos, this.lblDuracion, this.pgrProgreso, this.actualVideo);
         hilo.start();
     }//GEN-LAST:event_itmReproducirActionPerformed
+
+    private void btnAgrSubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgrSubMouseClicked
+        DefaultListModel modeloLista = (DefaultListModel) this.lstSubtitulos.getModel();
+        if (this.txtASubtitulos.getText().equals("")) {
+            JOptionPane.showMessageDialog(this.jdAgrVideo, "Debe escribir un Subtitulo!!!");
+        }else{
+            int cantSub = Integer.parseInt(this.spnDuracion.getValue().toString())/10;
+            if (modeloLista.getSize()-1 <= cantSub) {
+                modeloLista.addElement(this.txtASubtitulos.getText());
+            }else{
+                JOptionPane.showMessageDialog(this.jdAgrVideo, "Ya no puede agregar mas subtitulos!!!");
+            }
+            this.txtASubtitulos.setText("");
+        }
+    }//GEN-LAST:event_btnAgrSubMouseClicked
 
     public void cargarUsers(){
         this.archivo.cargarArchivo();
@@ -925,6 +969,7 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgrSub;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnDislike;
@@ -971,6 +1016,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
@@ -984,11 +1030,13 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JList<String> lstAllChanels;
     private javax.swing.JList<String> lstMisVideos;
     private javax.swing.JList<String> lstPlaylist;
+    private javax.swing.JList<String> lstSubtitulos;
     private javax.swing.JProgressBar pgrProgreso;
     private javax.swing.JPopupMenu popReproducir;
     private javax.swing.JSpinner spnDuracion;
     private javax.swing.JSpinner spnEdad;
     private javax.swing.JTextArea txtAComentarios;
+    private javax.swing.JTextArea txtASubtitulos;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtContraseñaR;
     private javax.swing.JTextField txtCorreo;
@@ -996,7 +1044,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreVid;
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField txtUsuarioR;
-    private javax.swing.JTextArea txtxASubtitulos;
     // End of variables declaration//GEN-END:variables
     private ArrayList<Usuarios> AllChanels = new ArrayList();
     private Usuarios actual;

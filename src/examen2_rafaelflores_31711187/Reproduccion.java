@@ -38,7 +38,7 @@ public class Reproduccion extends Thread{
     
     @Override
     public void run(){
-        int min = 0;
+        int cont = 0;
         this.titulo.setText(videoA.getNombre());
         this.progreso.setMaximum(duracion);
         while(vive){
@@ -48,6 +48,7 @@ public class Reproduccion extends Thread{
                 diferencia = diferencia / 1000;
                 this.progreso.setValue((int) diferencia);
                 this.telemetria.setText(diferencia+" Seg.");
+                
                 if (diferencia >= duracion) {
                     avanza = false;
                 }
